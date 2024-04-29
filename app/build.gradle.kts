@@ -74,8 +74,8 @@ dependencies {
     androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
 
     // Lottie
-    val lottieVersion = "3.4.0"
-    implementation("com.airbnb.android:lottie:$lottieVersion")
+    val lottieVersion = "4.0.0"
+    implementation("com.airbnb.android:lottie-compose:$lottieVersion")
 
     // Koin
     val koinVersion = "3.4.5"
