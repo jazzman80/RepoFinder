@@ -78,8 +78,12 @@ dependencies {
 
     // Koin
     val koinVersion = "3.4.5"
-//    implementation(platform("io.insert-koin:koin-bom:$koinVersion"))
-//    implementation("io.insert-koin:koin-core")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+
+    // Retrofit - GSON
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion")
 
 }
