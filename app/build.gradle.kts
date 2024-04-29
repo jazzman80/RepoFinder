@@ -42,7 +42,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
 
@@ -76,5 +76,10 @@ dependencies {
     val lottieVersion = "3.4.0"
     implementation("com.airbnb.android:lottie:$lottieVersion")
 
+    // Koin
+    val koinVersion = "3.4.5"
+//    implementation(platform("io.insert-koin:koin-bom:$koinVersion"))
+//    implementation("io.insert-koin:koin-core")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
 
 }
