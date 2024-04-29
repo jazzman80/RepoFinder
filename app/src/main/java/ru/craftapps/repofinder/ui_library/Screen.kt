@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,11 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import ru.craftapps.repofinder.theme.shadeColor
 import ru.iflex.mobile.charity.R
 import ru.iflex.mobile.charity.theme.bodyMedium
-import ru.iflex.mobile.charity.theme.primaryColor
-import ru.iflex.mobile.charity.theme.shadeColor
-import ru.iflex.mobile.charity.theme.whiteColor
 
 @Composable
 fun Screen(
@@ -31,7 +30,7 @@ fun Screen(
     Box(
         modifier = Modifier
             .background(
-                color = whiteColor
+                color = MaterialTheme.colorScheme.background
             )
             .clickable(
                 onClick = {},
@@ -56,8 +55,7 @@ fun Screen(
                     CircularProgressIndicator(
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .size(54.dp),
-                        color = primaryColor
+                            .size(54.dp)
                     )
                 }
             }
