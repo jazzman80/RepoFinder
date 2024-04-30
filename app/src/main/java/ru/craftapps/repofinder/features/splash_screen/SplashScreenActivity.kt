@@ -1,4 +1,7 @@
 package ru.craftapps.repofinder.features.splash_screen
 
-class SplashScreenActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class SplashScreenActivity : AppCompatActivity() {
+
 }
