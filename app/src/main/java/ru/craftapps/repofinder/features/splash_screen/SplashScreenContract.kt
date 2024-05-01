@@ -14,5 +14,7 @@ class SplashScreenContract {
 
     sealed class Event : ViewEvent
 
-    sealed class Effect : ViewSideEffect
+    sealed class Effect : ViewSideEffect {
+        data object NavigateToMainScreen : Effect()
+    }
 }

@@ -34,5 +34,11 @@ class SplashScreenViewModel() :
                 )
             }
         }
+
+        viewModelScope.launch {
+            delay(3000L)
+
+            setEffect { Effect.NavigateToMainScreen }
+        }
     }
 }

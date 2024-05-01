@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
@@ -35,13 +38,26 @@ import ru.craftapps.repofinder.ui_library.LoadState
 import ru.craftapps.repofinder.ui_library.Screen
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navigateToMainScreen: () -> Unit
+) {
 
     // Подключение вьюмодели
     val viewModel = koinViewModel<SplashScreenViewModel>()
 
     // Состояние экрана
     val state = viewModel.viewState.value
+
+    // Обработка эффектов
+    LaunchedEffect(true) {
+        viewModel.effect.onEach { effect ->
+            when (effect) {
+                is SplashScreenContract.Effect.NavigateToMainScreen -> {
+                    navigateToMainScreen()
+                }
+            }
+        }.collect()
+    }
 
     Screen(
         loadState = LoadState.SUCCESS
