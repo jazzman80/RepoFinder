@@ -1,6 +1,8 @@
 package ru.craftapps.repofinder.core
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class RepoFinderApp : Application() {
@@ -8,6 +10,8 @@ class RepoFinderApp : Application() {
         super.onCreate()
 
         startKoin {
+            androidLogger()
+            androidContext(this@RepoFinderApp)
             modules(appModule)
         }
     }
