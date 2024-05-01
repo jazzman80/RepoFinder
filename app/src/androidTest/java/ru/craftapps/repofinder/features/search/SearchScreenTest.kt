@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasScrollAction
@@ -58,6 +59,11 @@ class SearchScreenTest {
         "Шапка"
     )
 
+    private val topBarTextMatcher = SemanticsMatcher.expectValue(
+        SemanticsProperties.TestTag,
+        "Текст шапки"
+    )
+
     private fun topBarIsDisplayed() {
         composeRule.onNode(
             topBarMatcher,
@@ -67,7 +73,7 @@ class SearchScreenTest {
 
     private fun topBarTextIsDisplayed() {
         composeRule.onNode(
-            topBarMatcher,
+            topBarTextMatcher,
             useUnmergedTree = true
         ).assertTextEquals(
             context!!.getString(R.string.search_repos)
@@ -124,6 +130,13 @@ class SearchScreenTest {
             useUnmergedTree = true
         ).assertIsDisplayed()
     }
+
+    private fun navigationButtonIsClickable() {
+        composeRule.onNode(
+            navigationButtonMatcher,
+            useUnmergedTree = true
+        ).assertHasClickAction()
+    }
     //endregion
 
     //region Список найденных репозиториев
@@ -173,6 +186,7 @@ class SearchScreenTest {
     @Test
     fun navigationButtonTest() {
         navigationButtonIsDisplayed()
+        navigationButtonIsClickable()
     }
 
     @Test
