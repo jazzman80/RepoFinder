@@ -1,12 +1,14 @@
 package ru.craftapps.repofinder.features.splash_screen
 
+import android.content.Context
 import android.os.SystemClock.sleep
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +27,8 @@ class SplashScreenTest {
     //endregion
 
     @get:Rule
-    val composeRule = createAndroidComposeRule<SplashScreenActivity>()
+    val composeRule = createComposeRule()
+    private lateinit var context: Context
 
     //region Экран приветствия
     private fun whenSplashScreenLoaded() {
@@ -34,6 +37,8 @@ class SplashScreenTest {
                 androidContext(RepoFinderApp())
                 modules(appModule)
             }) {
+                context = LocalContext.current
+
                 AppTheme {
                     SplashScreen()
                 }
@@ -81,7 +86,7 @@ class SplashScreenTest {
             applicationTitleMatcher,
             useUnmergedTree = true
         ).assertTextEquals(
-            composeRule.activity.getString(R.string.application_title)
+            context.getString(R.string.application_title)
         )
     }
     //endregion
@@ -111,7 +116,7 @@ class SplashScreenTest {
             taglineMatcher,
             useUnmergedTree = true
         ).assertTextEquals(
-            composeRule.activity.getString(R.string.tagline)
+            context.getString(R.string.tagline)
         )
     }
     //endregion

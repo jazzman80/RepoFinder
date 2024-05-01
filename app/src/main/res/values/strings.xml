@@ -3,4 +3,6 @@
     <string name="error_network">Network Error</string>
     <string name="application_title">RepoFinder</string>
     <string name="tagline">Find and download files from repositories in seconds</string>
+    <string name="search_repos">Search repos</string>
+    <string name="start_search">Start search</string>
 </resources>

@@ -4,4 +4,6 @@
     <string name="error_network">Ошибка сети</string>
     <string name="application_title">RepoFinder</string>
     <string name="tagline">Находите и загружайте файлы из репозиториев за считанные секунды</string>
+    <string name="search_repos">Поиск репозиториев</string>
+    <string name="start_search">Начните поиск</string>
 </resources>

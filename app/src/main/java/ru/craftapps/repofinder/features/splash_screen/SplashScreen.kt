@@ -39,7 +39,7 @@ import ru.craftapps.repofinder.ui_library.Screen
 
 @Composable
 fun SplashScreen(
-    navigateToMainScreen: () -> Unit
+    navigateToMainScreen: () -> Unit = {}
 ) {
 
     // Подключение вьюмодели
