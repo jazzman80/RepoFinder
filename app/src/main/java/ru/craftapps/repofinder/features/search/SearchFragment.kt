@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import ru.craftapps.repofinder.theme.AppTheme
 
 class SearchFragment : Fragment() {
+
+    private val thisFragment = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +25,19 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val navigation = NavHostFragment.findNavController(thisFragment)
+
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    SearchScreen()
+                    SearchScreen(
+                        navigateToDownload = {
+                            val action =
+                                SearchFragmentDirections.actionSearchFragmentToDownloadFragment()
+                            navigation.navigate(action)
+                        }
+                    )
                 }
             }
         }

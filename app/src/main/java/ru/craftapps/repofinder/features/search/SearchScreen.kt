@@ -15,7 +15,9 @@ import ru.craftapps.repofinder.ui_library.Screen
 import ru.craftapps.repofinder.ui_library.TopBar
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    navigateToDownload: () -> Unit = {}
+) {
     // Подключение вьюмодели
     val viewModel = koinViewModel<SearchViewModel>()
 
@@ -27,7 +29,9 @@ fun SearchScreen() {
 
             TopBar(
                 title = stringResource(id = R.string.search_repos),
-                onDownloadButton = {}
+                onDownloadButton = {
+                    navigateToDownload()
+                }
             )
         }
     }

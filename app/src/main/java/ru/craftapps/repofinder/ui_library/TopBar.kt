@@ -59,7 +59,7 @@ fun TopBar(
                 modifier = Modifier.semantics {
                     testTag = "Кнопка переход на экран загрузок"
                 },
-                onClick = onDownloadButton
+                onClick = { onDownloadButton() }
             )
         }
     }
