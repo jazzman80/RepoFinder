@@ -1,16 +1,20 @@
 package ru.craftapps.repofinder.features.splash_screen
 
+import android.os.SystemClock.sleep
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
+import org.koin.android.ext.koin.androidContext
+import org.koin.compose.KoinApplication
 import ru.craftapps.repofinder.R
+import ru.craftapps.repofinder.core.RepoFinderApp
+import ru.craftapps.repofinder.core.appModule
 import ru.craftapps.repofinder.theme.AppTheme
 
 class SplashScreenTest {
@@ -26,8 +30,13 @@ class SplashScreenTest {
     //region Экран приветствия
     private fun whenSplashScreenLoaded() {
         composeRule.setContent {
-            AppTheme {
-                SplashScreen()
+            KoinApplication(application = {
+                androidContext(RepoFinderApp())
+                modules(appModule)
+            }) {
+                AppTheme {
+                    SplashScreen()
+                }
             }
         }
     }
@@ -131,7 +140,7 @@ class SplashScreenTest {
         // На экране приветсвия
         whenSplashScreenLoaded()
 
-        delay(5000L)
+        sleep(2000L)
 
         // Отображается логотип
         logoIsDisplayed()
