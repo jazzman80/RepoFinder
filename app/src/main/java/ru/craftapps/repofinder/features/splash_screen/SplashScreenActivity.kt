@@ -40,6 +40,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     navigateToMainScreen = {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 )
             }

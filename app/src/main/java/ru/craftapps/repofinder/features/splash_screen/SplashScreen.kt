@@ -138,7 +138,9 @@ fun SplashScreenPreview() {
         modules(appModule)
     }) {
         AppTheme {
-            SplashScreen()
+            SplashScreen(
+                navigateToMainScreen = {}
+            )
         }
     }
 }
