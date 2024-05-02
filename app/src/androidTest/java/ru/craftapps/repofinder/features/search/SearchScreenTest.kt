@@ -10,6 +10,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -87,6 +88,11 @@ class SearchScreenTest {
         "Строка поиска"
     )
 
+    private val searchBarPlaceholderMatcher = SemanticsMatcher.expectValue(
+        SemanticsProperties.TestTag,
+        "Плейсхолдер строки поиска"
+    )
+
     private fun searchBarIsDisplayed() {
         composeRule.onNode(
             searchBarMatcher,
@@ -94,12 +100,30 @@ class SearchScreenTest {
         ).assertIsDisplayed()
     }
 
-    private fun searchBarTextIsDisplayed() {
+    private fun searchBarPlaceholderIsDisplayed() {
+        composeRule.onNode(
+            searchBarPlaceholderMatcher,
+            useUnmergedTree = true
+        ).assertTextEquals(
+            context!!.getString(R.string.start_search)
+        )
+    }
+
+    private fun searchBarTextEditable() {
+        val testText = "Hello world"
+
+        composeRule.onNode(
+            searchBarMatcher,
+            useUnmergedTree = true
+        ).performTextInput(
+            testText
+        )
+
         composeRule.onNode(
             searchBarMatcher,
             useUnmergedTree = true
         ).assertTextEquals(
-            context!!.getString(R.string.start_search)
+            testText
         )
     }
     //endregion
@@ -175,7 +199,8 @@ class SearchScreenTest {
     @Test
     fun searchBarTest() {
         searchBarIsDisplayed()
-        searchBarTextIsDisplayed()
+        searchBarPlaceholderIsDisplayed()
+        searchBarTextEditable()
     }
 
     @Test

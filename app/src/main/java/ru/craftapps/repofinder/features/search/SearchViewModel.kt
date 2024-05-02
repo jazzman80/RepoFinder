@@ -10,7 +10,17 @@ class SearchViewModel(
 ) : BaseViewModel<Event, State, Effect>() {
     override fun setInitialState() = State()
 
-    override fun handleEvents(event: Event) {}
+    override fun handleEvents(event: Event) {
+        when (event) {
+            is Event.EditSearchText -> {
+                setState {
+                    copy(
+                        searchText = event.value
+                    )
+                }
+            }
+        }
+    }
 
 
 }

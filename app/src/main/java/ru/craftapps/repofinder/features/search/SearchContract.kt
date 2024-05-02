@@ -7,10 +7,13 @@ import ru.craftapps.repofinder.ui_library.LoadState
 
 class SearchContract {
     data class State(
-        val loadState: LoadState = LoadState.SUCCESS
+        val loadState: LoadState = LoadState.SUCCESS,
+        val searchText: String = ""
     ) : ViewState
 
-    sealed class Event : ViewEvent
+    sealed class Event : ViewEvent {
+        data class EditSearchText(val value: String) : Event()
+    }
 
     sealed class Effect : ViewSideEffect
 }
