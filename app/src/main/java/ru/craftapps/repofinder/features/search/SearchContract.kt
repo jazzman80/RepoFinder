@@ -13,6 +13,7 @@ class SearchContract {
 
     sealed class Event : ViewEvent {
         data class EditSearchText(val value: String) : Event()
+        data object Search : Event()
     }
 
     sealed class Effect : ViewSideEffect

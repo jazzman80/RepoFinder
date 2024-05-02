@@ -26,9 +26,6 @@ fun TopBar(
 ) {
     Row(
         modifier = modifier
-            .semantics {
-                testTag = "Шапка"
-            }
             .shadow(
                 elevation = 3.dp
             )
@@ -44,7 +41,7 @@ fun TopBar(
     ) {
 
         Text(
-            modifier = modifier
+            modifier = Modifier
                 .semantics {
                     testTag = "Текст шапки"
                 }

@@ -19,6 +19,10 @@ class SearchViewModel(
                     )
                 }
             }
+
+            Event.Search -> {
+
+            }
         }
     }
 

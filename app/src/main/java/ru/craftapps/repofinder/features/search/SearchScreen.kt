@@ -1,13 +1,13 @@
 package ru.craftapps.repofinder.features.search
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -21,8 +21,12 @@ import ru.craftapps.repofinder.R
 import ru.craftapps.repofinder.core.RepoFinderApp
 import ru.craftapps.repofinder.core.appModule
 import ru.craftapps.repofinder.features.search.SearchContract.Event
+import ru.craftapps.repofinder.features.search.SearchContract.Event.EditSearchText
+import ru.craftapps.repofinder.features.search.SearchContract.Event.Search
 import ru.craftapps.repofinder.theme.AppTheme
 import ru.craftapps.repofinder.ui_library.Screen
+import ru.craftapps.repofinder.ui_library.SearchBar
+import ru.craftapps.repofinder.ui_library.SearchButton
 import ru.craftapps.repofinder.ui_library.TopBar
 
 @Composable
@@ -42,44 +46,50 @@ fun SearchScreen(
         Column {
 
             TopBar(
+                modifier = Modifier
+                    .semantics {
+                        testTag = "Шапка"
+                    },
                 title = stringResource(id = R.string.search_repos),
                 onDownloadButton = {
                     navigateToDownload()
                 }
             )
 
-            BasicTextField(
+            Row(
                 modifier = Modifier
-                    .semantics {
-                        testTag = "Строка поиска"
-                    }
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = MaterialTheme.shapes.medium
-                    )
                     .background(
-                        color = MaterialTheme.colorScheme.background,
-                        shape = MaterialTheme.shapes.medium
+                        color = MaterialTheme.colorScheme.surfaceDim
                     )
-                    .padding(all = 8.dp),
-                value = state.searchText,
-                onValueChange = {
-                    setEvent(Event.EditSearchText(it))
-                },
-                textStyle = MaterialTheme.typography.bodyMedium
+                    .padding(
+                        vertical = 10.dp,
+                        horizontal = 16.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                if (state.searchText.isEmpty()) {
-                    Text(
-                        modifier = Modifier.semantics {
-                            testTag = "Плейсхолдер строки поиска"
+
+                SearchBar(
+                    modifier = Modifier
+                        .semantics {
+                            testTag = "Строка поиска"
+                        }
+                        .weight(1f),
+                    value = state.searchText,
+                    onValueChange = {
+                        setEvent(EditSearchText(it))
+                    }
+                )
+
+                SearchButton(
+                    modifier = Modifier
+                        .semantics {
+                            testTag = "Кнопка поиска"
                         },
-                        text = stringResource(id = R.string.start_search),
-                        color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                it()
+                    onClick = {
+                        setEvent(Search)
+                    }
+                )
             }
         }
     }
