@@ -8,7 +8,8 @@ import ru.craftapps.repofinder.ui_library.LoadState
 class SearchContract {
     data class State(
         val loadState: LoadState = LoadState.SUCCESS,
-        val searchText: String = ""
+        val searchText: String = "",
+        val searchResultList: List<RepoListItemState> = listOf()
     ) : ViewState
 
     sealed class Event : ViewEvent {

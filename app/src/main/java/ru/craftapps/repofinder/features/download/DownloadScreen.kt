@@ -8,10 +8,17 @@ import org.koin.compose.KoinApplication
 import ru.craftapps.repofinder.core.RepoFinderApp
 import ru.craftapps.repofinder.core.appModule
 import ru.craftapps.repofinder.theme.AppTheme
+import ru.craftapps.repofinder.ui_library.Screen
 
 @Composable
-fun DownloadScreen() {
-    Text(text = "Download")
+fun DownloadScreen(
+    state: DownloadContract.State = DownloadContract.State()
+) {
+    Screen(
+        loadState = state.loadState
+    ) {
+        Text(text = "Download")
+    }
 }
 
 @Preview

@@ -7,18 +7,20 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
 import ru.craftapps.repofinder.R
 import ru.craftapps.repofinder.core.RepoFinderApp
 import ru.craftapps.repofinder.core.appModule
+import ru.craftapps.repofinder.features.search.SearchContract.State
 import ru.craftapps.repofinder.theme.AppTheme
 
 class SearchScreenTest {
@@ -37,8 +39,7 @@ class SearchScreenTest {
     private var context: Context? = null
 
     //region Экран "Поиск репозиториев"
-    @Before
-    fun whenSearchScreenLoaded() {
+    private fun setSearchScreenWithViewModel() {
         composeRule.setContent {
             KoinApplication(application = {
                 androidContext(RepoFinderApp())
@@ -46,9 +47,35 @@ class SearchScreenTest {
             }) {
                 if (context == null) context = LocalContext.current
 
+                // Подключение вьюмодели
+                val viewModel = koinViewModel<SearchViewModel>()
+
+                // Состояние экрана
+                val state = viewModel.viewState.value
+
+                // События
+                val setEvent: (SearchContract.Event) -> Unit = { viewModel.setEvent(event = it) }
+
                 AppTheme {
-                    SearchScreen()
+                    SearchScreen(
+                        state = state,
+                        setEvent = setEvent
+                    )
                 }
+            }
+        }
+    }
+
+    private fun setSearchScreenMock(
+        state: State = State()
+    ) {
+        composeRule.setContent {
+            if (context == null) context = LocalContext.current
+
+            AppTheme {
+                SearchScreen(
+                    state = state
+                )
             }
         }
     }
@@ -169,11 +196,37 @@ class SearchScreenTest {
         "Список найденных репозиториев"
     )
 
+    private val reposFakeList = listOf(
+        RepoListItemState(
+            title = "Repo One",
+            author = "System"
+        ),
+        RepoListItemState(
+            title = "Microsoft Word",
+            author = "BGates"
+        ),
+        RepoListItemState(
+            title = "Twitter",
+            author = "Imask"
+        ),
+        RepoListItemState(
+            title = "Vkontakte",
+            author = "Durov"
+        )
+    )
+
     private fun reposListIsDisplayed() {
         composeRule.onNode(
             reposListMatcher,
             useUnmergedTree = true
         ).assertIsDisplayed()
+    }
+
+    private fun reposListIsNotDisplayed() {
+        composeRule.onNode(
+            reposListMatcher,
+            useUnmergedTree = true
+        ).assertIsNotDisplayed()
     }
 
     private fun reposListIsScrollable() {
@@ -186,18 +239,46 @@ class SearchScreenTest {
 
 
     //region Сообщение "Ничего не найдено"
-    //TODO
+    private val notFoundTitleMatcher = SemanticsMatcher.expectValue(
+        SemanticsProperties.TestTag,
+        "Сообщение ничего не найдено"
+    )
+
+    private fun notFoundTitleDisplayed() {
+        composeRule.onNode(
+            notFoundTitleMatcher,
+            useUnmergedTree = true
+        ).assertIsDisplayed()
+    }
+
+    private fun notFoundTitleNotDisplayed() {
+        composeRule.onNode(
+            notFoundTitleMatcher,
+            useUnmergedTree = true
+        ).assertIsNotDisplayed()
+    }
+
+    private fun notFoundTitleTextDisplayed() {
+        composeRule.onNode(
+            notFoundTitleMatcher,
+            useUnmergedTree = true
+        ).assertTextEquals(
+            context!!.getString(R.string.nothing_was_found)
+        )
+    }
     //endregion
 
 
     @Test
     fun topBarTest() {
+        setSearchScreenMock()
         topBarIsDisplayed()
         topBarTextIsDisplayed()
     }
 
     @Test
     fun searchBarTest() {
+        setSearchScreenWithViewModel()
         searchBarIsDisplayed()
         searchBarPlaceholderIsDisplayed()
         searchBarTextEditable()
@@ -205,18 +286,37 @@ class SearchScreenTest {
 
     @Test
     fun searchButtonTest() {
+        setSearchScreenMock()
         searchButtonIsDisplayed()
     }
 
     @Test
     fun navigationButtonTest() {
+        setSearchScreenMock()
         navigationButtonIsDisplayed()
         navigationButtonIsClickable()
     }
 
     @Test
-    fun reposListTest() {
+    fun emptyReposListTest() {
+        setSearchScreenMock()
+        notFoundTitleDisplayed()
+        notFoundTitleTextDisplayed()
+        reposListIsNotDisplayed()
+    }
+
+    @Test
+    fun populatedReposListTest() {
+        setSearchScreenMock(
+            state = State(
+                searchResultList = reposFakeList
+            )
+        )
+
+        notFoundTitleNotDisplayed()
         reposListIsDisplayed()
         reposListIsScrollable()
     }
+
+
 }

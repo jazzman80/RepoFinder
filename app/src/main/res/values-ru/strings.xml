@@ -6,4 +6,7 @@
     <string name="tagline">Находите и загружайте файлы из репозиториев за считанные секунды</string>
     <string name="search_repos">Поиск репозиториев</string>
     <string name="start_search">Начните поиск</string>
+    <string name="nothing_was_found">Ничего не найдено</string>
+    <string name="downloaded_repos">Скачанные репозитории</string>
+    <string name="nothing_was_saved">Ничего не сохранено</string>
 </resources>
