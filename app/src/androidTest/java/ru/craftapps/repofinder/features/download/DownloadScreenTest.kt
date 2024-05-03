@@ -107,7 +107,7 @@ class DownloadScreenTest {
     }
     //endregion
 
-    //region Список найденных репозиториев
+    //region Список сохранённых репозиториев
     private val reposListMatcher = SemanticsMatcher.expectValue(
         SemanticsProperties.TestTag,
         "Список сохранённых репозиториев"

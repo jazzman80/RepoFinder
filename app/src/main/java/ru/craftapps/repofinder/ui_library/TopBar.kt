@@ -22,7 +22,8 @@ import ru.craftapps.repofinder.theme.AppTheme
 fun TopBar(
     modifier: Modifier = Modifier,
     title: String = "",
-    onDownloadButton: (() -> Unit)? = null
+    onDownloadButton: (() -> Unit)? = null,
+    onBackButton: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
@@ -39,6 +40,17 @@ fun TopBar(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
+        if (onBackButton != null) {
+            Button(
+                modifier = Modifier.semantics {
+                    testTag = "Кнопка назад"
+                },
+                icon = R.drawable.ic_back,
+                onClick = { onBackButton() },
+                iconColor = MaterialTheme.colorScheme.onPrimary
+            )
+        }
 
         Text(
             modifier = Modifier
@@ -59,6 +71,7 @@ fun TopBar(
                 onClick = { onDownloadButton() }
             )
         }
+
     }
 }
 
