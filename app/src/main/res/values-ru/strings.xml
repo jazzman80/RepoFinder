@@ -9,4 +9,6 @@
     <string name="nothing_was_found">Ничего не найдено</string>
     <string name="downloaded_repos">Скачанные репозитории</string>
     <string name="nothing_was_saved">Ничего не сохранено</string>
+    <string name="file_saved">Файл загружен</string>
+    <string name="file_not_saved">Ошибка. Файл не загружен</string>
 </resources>

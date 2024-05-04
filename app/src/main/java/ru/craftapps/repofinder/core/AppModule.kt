@@ -12,6 +12,7 @@ import ru.craftapps.repofinder.business.RepositoryImplementation
 import ru.craftapps.repofinder.data.NetworkDataSorce
 import ru.craftapps.repofinder.features.search.SearchViewModel
 import ru.craftapps.repofinder.features.splash_screen.SplashScreenViewModel
+import ru.craftapps.repofinder.use_case.DownloadRepoUseCase
 import ru.craftapps.repofinder.use_case.SearchReposUseCase
 
 val appModule = module {
@@ -36,4 +37,5 @@ val appModule = module {
     viewModelOf(::SearchViewModel)
 
     factoryOf(::SearchReposUseCase)
+    factoryOf(::DownloadRepoUseCase)
 }

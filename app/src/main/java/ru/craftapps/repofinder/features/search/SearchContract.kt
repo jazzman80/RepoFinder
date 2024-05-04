@@ -20,6 +20,7 @@ class SearchContract {
         data class EditSearchText(val value: String) : Event()
         data object Search : Event()
         data object LoadNextPage : Event()
+        data class DownloadRepo(val path: String, val name: String) : Event()
     }
 
     sealed class Effect : ViewSideEffect

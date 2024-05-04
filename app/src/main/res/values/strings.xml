@@ -8,4 +8,6 @@
     <string name="nothing_was_found">Nothing was found</string>
     <string name="downloaded_repos">Downloaded repos</string>
     <string name="nothing_was_saved">Nothing was saved</string>
+    <string name="file_saved">File saved</string>
+    <string name="file_not_saved">Error. File not saved</string>
 </resources>

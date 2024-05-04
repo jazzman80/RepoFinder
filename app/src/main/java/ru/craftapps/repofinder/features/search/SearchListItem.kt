@@ -21,7 +21,8 @@ import ru.craftapps.repofinder.ui_library.Button
 
 @Composable
 fun SearchListItem(
-    state: RepoListItemState = RepoListItemState()
+    state: RepoListItemState = RepoListItemState(),
+    downloadRepo: (String, String) -> Unit = { _, _ -> }
 ) {
 
     val uriHandler = LocalUriHandler.current
@@ -29,7 +30,7 @@ fun SearchListItem(
     Column(
         modifier = Modifier
             .clickable {
-                uriHandler.openUri(state.uri)
+                uriHandler.openUri(state.htmlUrl)
             }
             .shadow(
                 elevation = 5.dp,
@@ -64,7 +65,8 @@ fun SearchListItem(
                     testTag = "Кнопка скачать"
                 },
                 icon = R.drawable.ic_download_repo,
-                iconColor = MaterialTheme.colorScheme.onTertiaryContainer
+                iconColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                onClick = { downloadRepo(state.url, state.title) }
             )
         }
 

@@ -8,10 +8,12 @@ import ru.craftapps.repofinder.features.search.SearchContract.Effect
 import ru.craftapps.repofinder.features.search.SearchContract.Event
 import ru.craftapps.repofinder.features.search.SearchContract.State
 import ru.craftapps.repofinder.ui_library.LoadState
+import ru.craftapps.repofinder.use_case.DownloadRepoUseCase
 import ru.craftapps.repofinder.use_case.SearchReposUseCase
 
 class SearchViewModel(
-    private val searchRepos: SearchReposUseCase
+    private val searchRepos: SearchReposUseCase,
+    private val downloadRepo: DownloadRepoUseCase
 ) : BaseViewModel<Event, State, Effect>() {
     override fun setInitialState() = State()
 
@@ -94,6 +96,12 @@ class SearchViewModel(
                         }
                     }
                 }
+            }
+
+            is Event.DownloadRepo -> {
+
+                downloadRepo(event.path, event.name)
+
             }
         }
     }

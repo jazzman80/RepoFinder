@@ -122,9 +122,12 @@ fun SearchScreen(
                         Spacer(modifier = Modifier.height(5.dp))
                     }
 
-                    items(state.searchResultList.size) {
+                    items(state.searchResultList.size) { index ->
                         SearchListItem(
-                            state = state.searchResultList[it]
+                            state = state.searchResultList[index],
+                            downloadRepo = { path, name ->
+                                setEvent(Event.DownloadRepo(path, name))
+                            }
                         )
                     }
 
