@@ -125,8 +125,8 @@ fun SearchScreen(
                     items(state.searchResultList.size) { index ->
                         SearchListItem(
                             state = state.searchResultList[index],
-                            downloadRepo = { path, name ->
-                                setEvent(Event.DownloadRepo(path, name))
+                            downloadRepo = {
+                                setEvent(Event.DownloadRepo(it))
                             }
                         )
                     }

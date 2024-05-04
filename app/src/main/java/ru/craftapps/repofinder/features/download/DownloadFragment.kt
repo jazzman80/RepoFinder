@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import org.koin.androidx.compose.koinViewModel
 import ru.craftapps.repofinder.theme.AppTheme
 
 class DownloadFragment : Fragment() {
@@ -24,7 +25,15 @@ class DownloadFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
+
+                    // Подключение вьюмодели
+                    val viewModel = koinViewModel<DownloadViewModel>()
+
+                    // Состояние экрана
+                    val state = viewModel.viewState.value
+
                     DownloadScreen(
+                        state = state,
                         navigateBack = {
                             navigation.popBackStack()
                         }

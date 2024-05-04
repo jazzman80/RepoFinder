@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("androidx.navigation.safeargs.kotlin")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -93,6 +94,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.0")

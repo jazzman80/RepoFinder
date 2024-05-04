@@ -8,7 +8,7 @@ import ru.craftapps.repofinder.ui_library.LoadState
 
 class DownloadContract {
     data class State(
-        val loadState: LoadState = LoadState.SUCCESS,
+        val loadState: LoadState = LoadState.LOAD,
         val downloadedReposList: List<RepoListItemState> = listOf()
     ) : ViewState
 

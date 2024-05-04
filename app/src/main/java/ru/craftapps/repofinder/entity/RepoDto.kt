@@ -3,6 +3,7 @@ package ru.craftapps.repofinder.entity
 import com.google.gson.annotations.SerializedName
 
 data class RepoDto(
+    val id: Int,
     val name: String,
     val owner: OwnerDto,
     @SerializedName("html_url")

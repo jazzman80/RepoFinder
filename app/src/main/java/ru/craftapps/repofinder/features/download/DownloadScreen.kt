@@ -67,7 +67,8 @@ fun DownloadScreen(
 
                     items(state.downloadedReposList.size) {
                         SearchListItem(
-                            state = state.downloadedReposList[it]
+                            state = state.downloadedReposList[it],
+                            displayDownloadButton = false
                         )
                     }
 

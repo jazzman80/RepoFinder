@@ -2,6 +2,7 @@ package ru.craftapps.repofinder.business
 
 import android.content.Context
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,13 +12,17 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 import ru.craftapps.repofinder.R
 import ru.craftapps.repofinder.data.NetworkDataSorce
+import ru.craftapps.repofinder.db.AppDatabase
+import ru.craftapps.repofinder.db.RepoEntity
 import ru.craftapps.repofinder.entity.RepoDto
+import ru.craftapps.repofinder.features.search.RepoListItemState
 import java.io.File
 import java.io.FileOutputStream
 
 
 class RepositoryImplementation(
     private val networkDataSorce: NetworkDataSorce,
+    private val localDataSource: AppDatabase,
     private val context: Context
 ) : Repository {
 
@@ -42,11 +47,11 @@ class RepositoryImplementation(
         }
     }
 
-    override fun downloadRepo(path: String, name: String) {
+    override fun downloadRepo(repo: RepoListItemState) {
         scope.launch {
             try {
                 val result = networkDataSorce.downloadRepo(
-                    path = path
+                    path = repo.url
                 ).awaitResponse()
 
                 if (result.isSuccessful) {
@@ -56,7 +61,7 @@ class RepositoryImplementation(
 
                     val fileContents = result.body()!!.bytes()
 
-                    val file = File(dir, "$name.zip")
+                    val file = File(dir, "${repo.title}.zip")
 
 
                     val stream = FileOutputStream(file)
@@ -64,6 +69,9 @@ class RepositoryImplementation(
                     stream.use {
                         it.write(fileContents)
                     }
+
+                    val entity = RepoEntity.fromRepoListItemState(repo)
+                    localDataSource.repoDao().insert(entity)
 
                     Dispatchers.Main {
                         Toast.makeText(
@@ -76,6 +84,9 @@ class RepositoryImplementation(
                 }
 
             } catch (e: Exception) {
+
+                Log.d("MOO", e.message!!)
+
                 Dispatchers.Main {
                     Toast.makeText(
                         context,
@@ -87,6 +98,15 @@ class RepositoryImplementation(
         }
 
 
+    }
+
+    override suspend fun downloadedList(): List<RepoEntity>? {
+        return try {
+            localDataSource.repoDao().getAll()
+
+        } catch (e: Exception) {
+            null
+        }
     }
 
 }

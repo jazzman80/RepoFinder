@@ -99,9 +99,7 @@ class SearchViewModel(
             }
 
             is Event.DownloadRepo -> {
-
-                downloadRepo(event.path, event.name)
-
+                downloadRepo(event.repo)
             }
         }
     }
