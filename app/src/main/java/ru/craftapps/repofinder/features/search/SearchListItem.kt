@@ -1,6 +1,7 @@
 package ru.craftapps.repofinder.features.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +23,14 @@ import ru.craftapps.repofinder.ui_library.Button
 fun SearchListItem(
     state: RepoListItemState = RepoListItemState()
 ) {
+
+    val uriHandler = LocalUriHandler.current
+
     Column(
         modifier = Modifier
+            .clickable {
+                uriHandler.openUri(state.uri)
+            }
             .shadow(
                 elevation = 5.dp,
                 shape = MaterialTheme.shapes.medium
